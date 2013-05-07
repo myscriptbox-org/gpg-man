@@ -1,0 +1,4 @@
+This command verify if a public key exists for a particular email address. Example:{br}
+        {program} key.public john@doe.com -exists
+The command outputs 'yes' if the public key is present and 'no' if not.
+ 

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+# check if stash exists
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$GPG_STASHED_FOLDER"
+
+#remove db
+source "$UTIL_FOLDER/folder.delete"
+folder_delete "$GPG_FOLDER"
+
+# copy stash to db
+cp -aR "$GPG_STASHED_FOLDER" "$GPG_FOLDER"
+
+#remove stash
+folder_delete "$GPG_STASHED_FOLDER"
+

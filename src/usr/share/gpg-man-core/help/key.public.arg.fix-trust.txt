@@ -1,0 +1,4 @@
+This command restores the trust in the key in the database identified by an email address, to the maximum level (6). At lower levels, {b}gpg{/b} may balk at using the key. Example:{br}
+        {program} key john@doe.com -fix-trust{br}
+{program} will normally always store keys at maximum trust level. It is possible, however, to manage the {b}gpg{/b} database with other tools or directly with {b}gpg{/b} and use different levels of ownertrust. 
+

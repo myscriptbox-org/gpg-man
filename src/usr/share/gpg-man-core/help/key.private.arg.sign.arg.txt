@@ -1,0 +1,8 @@
+This command uses the private key for an email address to sign a file. Example:{br}
+        {program} key.private john@doe.com -sign myfile.doc > myfile.sig{br}
+The redirection will save the signature into the file 'myfile.sig'. Without redirection, the command will just show the signature on the terminal screen. Example:{br}
+        {program} key.private john@doe.com -sign myfile.doc{br}
+It is also possible to supply the file on stdin. Example:{br}
+        cat myfile.doc | {program} key.private john@doe.com -sign - > myfile.sig{br}
+In that case, the file argument should be a dash ("-").
+

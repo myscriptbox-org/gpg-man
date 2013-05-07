@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$GPG_FOLDER"
+
+source "$UTIL_FOLDER/folder.delete"
+folder_delete "$GPG_STASHED_FOLDER"
+
+cp -aR "$GPG_FOLDER" "$GPG_STASHED_FOLDER"
+

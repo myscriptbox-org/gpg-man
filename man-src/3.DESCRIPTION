@@ -1,0 +1,24 @@
+[[db]]
+Use this object path to manipulate the entire database in one go, mostly for backing up, restoring, or deleting the entire database of keys.
+
+[[key]]
+A key is always identified by an email address. It may have a {b}private{/b} and a {b}public{/b} part.
+
+[[key.private]]
+You can use a private key to create a signature file for a file that you want to send. 
+
+[[key.public]]
+You can use a public key to encrypt messages that you send. 
+
+[[keys]]
+At the level of the keys collection, you can import public and private keys. If keys were managed outside {program}, you can fix their trust level, so that they become usable again.
+
+[[keys.private]]
+At the level of the collection of private keys, you can decrypt a message that you receive.
+
+[[keys.public]]
+At the level of the collection of public keys, you can verify the signature of a file.
+
+[[stash]]
+before making changes to the database, you may want to ensure that you can undo your changes. Stash your database. At any time you can always unstash back its stashed version.
+

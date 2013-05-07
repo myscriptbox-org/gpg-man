@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+source "$UTIL_FOLDER/email.validate"
+email="$1"
+email_validate "$email"
+
+source "$UTIL_FOLDER/file.assert-exists"
+filePath="$2"
+if [ ! "$filePath" = "-" ] ; then
+	file_assert_exists "$filePath"
+fi
+
+cmd="$GPG --recipient $email --yes --output /dev/stdout --encrypt --armor"
+if [ ! "$filePath" = "-" ] ; then
+	cmd="$cmd $filePath"
+fi
+
+$cmd
+

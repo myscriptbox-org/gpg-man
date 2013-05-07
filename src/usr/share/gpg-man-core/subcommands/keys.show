@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+FORMAT="%-30s %-10s %-7s %-7s %-7s %-s\n"
+printf "$FORMAT" "email" "id" "trust" "public" "private" "name"
+
+while read line; do
+	IFS='|' read email id name trust pub pri <<< "$line"	
+	printf "$FORMAT" "$email" "$id" "$trust" "$pub" "$pri" "$name"
+done < <($UTIL_FOLDER/db.list-keys | sort)
+

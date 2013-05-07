@@ -1,0 +1,5 @@
+This command restores the trust in every key in the database to the maximum level (6). At lower levels, {b}gpg{/b} may balk at using the key. Example:{br}
+        {program} db -fix-trust{br}
+{program} will normally always store keys at maximum trust level. It is possible, however, to manage the {b}gpg{/b} database with other tools or directly with {b}gpg{/b} and use different levels of ownertrust. 
+
+

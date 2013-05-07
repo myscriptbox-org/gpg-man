@@ -1,0 +1,1 @@
+{program} manages the {b}gpg{/b} key database. It also supports encrypting, decrypting, signing and verifying signatures with {b}gpg{/b}

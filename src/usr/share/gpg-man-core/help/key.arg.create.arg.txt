@@ -1,0 +1,8 @@
+This command creates a key for given email address and a name. Example:{br}
+        {program} key john@doe.com -create "John Doe"{br}
+If the name contains spaces, you should enquote the name or else escape the quote. Acceptable alternatives, are:{br}
+        {program} key john@doe.com -create 'John Doe'{br}
+        {program} key john@doe.com -create John\ Doe{br}
+Key creating is notoriously lengthy with {b}gpg{/b}. Also, don't be surprised that the program keeps accepting input while it is creating the key. This was done on purpose in {b}gpg{/b}, in order to increase the entropy (randomness) of the key.
+
+

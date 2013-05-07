@@ -1,0 +1,14 @@
+This command scans through the collection of private keys to locate a private key than can decrypt the given message. Example:{br}
+{br}
+{program} keys.private john@doe.com -decrypt myfile.doc.encrypted > myfile.doc{br}
+{br}
+The redirection will save the cleartext content into the file 'myfile.doc'. Without redirection, the command will just show the encrypted file on the terminal screen. Example:{br}
+{br}
+{program} keys.private john@doe.com -decrypt myfile.doc.encrypted{br}
+{br}
+It is also possible to supply the file on stdin. Example:{br}
+{br}
+cat myfile.doc | {program} keys.private john@doe.com -decrypt -  > myfile.doc{br}
+{br}
+In that case, the file argument should be a dash ("-").
+

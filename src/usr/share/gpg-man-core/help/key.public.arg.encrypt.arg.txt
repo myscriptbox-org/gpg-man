@@ -1,0 +1,8 @@
+This command uses the public key for an email address to encrypt a file. Example:{br}
+        {program} key.public john@doe.com -encrypt myfile.doc > myfile.doc.encrypted{br}
+The redirection will save the key into the file 'myfile.doc.encrypted'. Without redirection, the command will just show the encrypted file on the terminal screen. Example:{br}
+        {program} key.public john@doe.com -encrypt myfile.doc{br}
+It is also possible to supply the file on stdin. Example:{br}
+        cat myfile.doc | {program} key.private john@doe.com -encrypt - > myfile.doc.encrypted{br}
+In that case, the file argument should be a dash ("-").
+

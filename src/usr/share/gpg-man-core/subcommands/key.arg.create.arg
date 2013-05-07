@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+function usage
+{
+        echo "$THIS_SCRIPT key [email] -create [name]" >&2
+        exit 1
+}
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+
+# exactly 2 arguments expected
+if [ $# -ne 2 ] ; then
+        usage
+fi
+
+email="$1"
+
+# validate email
+if [[ ! $email =~ ^.*@.*\..*$ ]] ; then
+        echo "ERROR: invalid email: $email." >&2
+        exit 1
+fi
+
+name="$2"
+
+# validate name
+if [[ $name =~ ^.*@.*$ ]] ; then
+        echo "ERROR: name must not contain a '@': $name." >&2
+        exit 1
+fi
+
+echo "This operation can take a long time ..."
+
+specs=$(cat <<EOF
+  Key-Type: RSA
+  Key-Length: 2048
+  Subkey-Type: RSA
+  Subkey-Length: 2048
+  Expire-Date: 0
+  Name-Real: $name
+  Name-Email: $email
+EOF
+)
+
+echo "$specs" | $GPG --gen-key --batch > /dev/null 2>&1
+

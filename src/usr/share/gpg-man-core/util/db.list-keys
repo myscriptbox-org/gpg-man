@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+declare -A gpgKeys
+
+# read public keys
+
+# pub size/id		read id
+# uid name <email>	read name email
+# sub ....		(ignore)
+# empty line		signal new key
+
+source "$UTIL_FOLDER/key.fingerprint"
+
+while read line; do
+	firstColumn=${line:0:3}		
+	case "$firstColumn" in
+		'pub')
+			read col1 col2 col3 <<< "$line"
+			id=${col2##*/}
+			;;
+		'uid') 
+			read col1 col2 col3 col4 <<< "$line"
+			name=$(echo "$line" | sed 's/uid *\([^<]*\) <.*/\1/')
+			email=$(echo "$line" | sed 's/uid *[^<]* <\(.*\)>/\1/')
+			fingerprint=$(key_fingerprint "$email")
+			ownertrustRecord=$($GPG --export-ownertrust | grep "$fingerprint") 
+			ownertrust=$(echo "$ownertrustRecord" | sed 's/.*:\(.*\):/\1/')
+			if [ "$ownertrust" = "" ] ; then
+				ownertrust=0
+			fi
+			;;
+		'')
+			record="$email|$id|$name|$ownertrust|yes"
+			gpgKeys[$email]="$record"
+			id=''
+			name=''
+			email=''
+			;;
+	esac
+done < <($GPG --list-public-keys 2> /dev/null)
+
+# read private keys
+# sec size/id		read id
+# uid name <email> 	read name email
+# ssb ... 		(ignore)
+# empty line		signal new key
+
+while read line; do
+	firstColumn=${line:0:3}		
+	case "$firstColumn" in
+		'sec')
+			read col1 col2 col3 <<< "$line"
+			id=${col2##*/}
+			;;
+		'uid') 
+			read col1 col2 col3 col4 <<< "$line"
+			name=$(echo "$line" | sed 's/uid *\([^<]*\) <.*/\1/')
+			email=$(echo "$line" | sed 's/uid *[^<]* <\(.*\)>/\1/')
+			;;
+		'')
+			record=${gpgKeys[$email]};
+			IFS='|' read email2 id2 name2 ownertrust2 pub2 <<< "$record"
+			if [ "$id"="$id2" ]; then
+				gpgKeys[$email]="$record|yes"
+			fi
+			#if there is no public key, ignore the private key
+			#dangling private keys are considered a bug
+			id=''
+			name=''
+			email=''
+			;;
+	esac
+done < <($GPG --list-secret-keys 2> /dev/null) 
+
+
+#outputs: email|id|name|pub|pri
+for key in "${!gpgKeys[@]}"; do
+	record=${gpgKeys[$key]};
+	IFS='|' read email2 id2 name2 ownertrust2 pub2 pri <<< "$record"
+	if [ "$pri" = "" ] ; then
+		echo "$record|no"
+	else
+		echo "$record"
+	fi
+done
+

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+source "$UTIL_FOLDER/file.assert-exists"
+filePath="$1"
+if [ ! "$filePath" = "-" ] ; then
+	file_assert_exists "$filePath"
+fi
+
+cmd="gpg --decrypt"
+if [ ! "$filePath" = "-" ] ; then
+	cmd="$cmd $filePath"
+fi
+
+# complex bashism to achieve to output stderr only in case of errors
+
+{ error=$($cmd 2>&1 1>&$out); } {out}>&1
+
+if [ $? -ne 0 ] ; then
+        echo "ERROR: $error"
+fi
+

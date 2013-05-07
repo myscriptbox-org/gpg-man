@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+email="$1"
+source "$UTIL_FOLDER/email.validate"
+email_validate "$email"
+source "$UTIL_FOLDER/key.fingerprint"
+fingerprint=$(key_fingerprint "$email")
+if [ "$fingerprint" = "" ] ; then
+	echo "ERROR: cannot retrieve fingerprint for key: $email" >&2        
+else
+        $GPG --batch --yes --delete-secret-and-public-key "$fingerprint"
+fi
+

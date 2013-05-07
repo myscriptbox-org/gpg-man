@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+function email_validate
+{
+        needle="$1"
+        while read line; do
+	        IFS='|' read email id name pub pri <<< "$line"	
+                if [ "$needle" = "$email" ] ; then
+                        return
+                fi
+        done < <($UTIL_FOLDER/db.list-keys)
+        echo "ERROR: invalid email: $needle." >&2
+        exit 1
+}

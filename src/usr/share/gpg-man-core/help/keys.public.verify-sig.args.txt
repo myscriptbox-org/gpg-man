@@ -1,0 +1,4 @@
+This command scans through the collection of public keys to locate a public key than can verify the signature of the given message. Example:{br}
+        {program} keys.public john@doe.com -verify-sig myfile.sig myfile.doc{br}
+The first argument must be the signature file (myfile.sig). The second argument must be the file which to which the signature applies (myfile.doc).
+

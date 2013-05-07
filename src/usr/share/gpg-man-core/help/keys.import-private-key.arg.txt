@@ -1,0 +1,5 @@
+This command imports a private key into the database. Example:{br}
+        {program} db -import-private-key myfile.pri{br}
+In order to import from stdin, use '-' as file name. Example:{br}
+        cat mykey.pri | {program} db -import-private-key -{br}
+

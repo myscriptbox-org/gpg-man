@@ -1,0 +1,6 @@
+This command dumps the private key for an email address to stdout. Example:{br}
+        {program} key.private john@doe.com -show > john.doe.key.pri{br}
+The redirection will save the key into the file 'john.doe.key.pri'. Without redirection, the command will just show the content of the key on the terminal screen. Example:{br}
+        {program} key.private john@doe.com -show
+
+

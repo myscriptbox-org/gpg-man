@@ -1,0 +1,7 @@
+show
+encrypt
+decrypt
+sign
+verify-sig
+exists
+

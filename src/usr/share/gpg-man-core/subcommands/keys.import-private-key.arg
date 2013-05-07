@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+filePath="$1"
+if [ ! "$filePath" = "-" ] ; then
+	source "$UTIL_FOLDER/file.assert-exists"
+	file_assert_exists "$filePath"
+else
+	filePath="/dev/stdin"
+fi
+$GPG  --allow-secret-key-import --import "$filePath"
+

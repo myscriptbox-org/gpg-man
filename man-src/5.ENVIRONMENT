@@ -1,0 +1,8 @@
+[[GPG_FOLDER]]
+By default, {program} will look for the gpg database in ~/.gnupg. You can override this with the GPG_FOLDER environment variable. Example:{br}
+    GPG_FOLDER=/var/test/mygpg {program} ...
+Setting the variable just before invoking {program} will point the GPG_FOLDER elsewhere.
+[[GPG_STASHED_FOLDER]]
+By default, {program} will stash the database in ~/.gnupg.stashed. You can override this with the GPG_STASHED_FOLDER environment variable. Example:{br}
+    GPG_STASHED_FOLDER=/var/test/mygpgstash {program} ...
+

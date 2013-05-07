@@ -1,0 +1,8 @@
+By default, {program} looks for the gpg security database in {b}~/.gnupg{/b}.
+[[pubring.gpg]]
+This file contains the public keys.
+[[secring.gpg]]
+This file contains the private keys.
+[[trustdb.gpg]]
+This file contains the trust levels for the keys.
+

@@ -1,0 +1,15 @@
+This command shows the list of keys stored in the database. Example:{br}
+{br}
+$ {program} keys -show{br}
+email                          id         trust   public  private name{br}
+john1@doe.com                  5E15E3DA   6       yes     yes     John 1 Doe{br}
+john2@doe.com                  7E15E3DA   6       yes     yes     John 2 Doe{br}
+john3@doe.com                  9E15E3DA   6       yes     yes     John 3 Doe{br}
+{br}
+{b}email{/b}: The email address for the key.{br}
+{b}id{/b}: The id for the key. {b}gpg{/b} often refers to the id when referring to a key.{br}
+{b}trust{/b}: The trust level for a key. {program} only deals with keys at trust level 6. Keys at lower trust levels may not always be usable.{br}
+{b}public{/b}: Yes, if the public key is present. It should always be present.{br}
+{b}private{/b}: Yes, if the private key is present. A key with just a public part, is very normal, if it was supplied by someone else to you.{br}
+{b}name{/b}: The name of the person associated to the key.
+

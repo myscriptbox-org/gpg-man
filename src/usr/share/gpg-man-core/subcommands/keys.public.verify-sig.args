@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+function usage
+{
+        echo "ERROR: USAGE: $THIS_SCRIPT keys.public.verify-sig [signatureFile] [documentFile]" >&2
+        exit 1
+}
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+source "$UTIL_FOLDER/email.validate"
+source "$UTIL_FOLDER/file.assert-exists"
+
+sigFilePath="$1"
+file_assert_exists "$sigFilePath"
+docFilePath="$2"
+if [ "$docFilePath" = "" ] ; then
+        usage
+fi
+file_assert_exists "$docFilePath"
+
+$GPG --verify "$sigFilePath" "$docFilePath"
+
