@@ -1,4 +1,4 @@
-# man page for gpg-man.
+# man page for gpg-man
 ## NAME 
 **gpg-man** manages the **gpg** key database. It also supports encrypting, decrypting, signing and verifying signatures with **gpg**
 ## SYNOPSIS
@@ -223,3 +223,4 @@ Report bugs to: erik@sankuru.biz
 
 # COPYRIGHT
 Licensed under GPL
+folder/generate-readme-stdout executed.
