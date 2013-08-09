@@ -52,6 +52,12 @@ will create mybackup.zip
 will also create mybackup.zip  
 The backup zip contains all user-level configuration database files used by **gpg**.
 
+### db -delete
+This command deletes the entire gpg user-level configuration database.
+
+### db -unstash
+This command puts back the copy of the gpg user-level configuration database made earlier with '**gpg-man** db -stash'. Use it if you want to undo the changes made since the last time you stashed the database.
+
 ### db -restore [arg]
 This command restores the gpg user-level configuration database from the zip file supplied as an argument. Example:  
     **gpg-man** db -restore mybackup.zip  
@@ -59,12 +65,6 @@ will restore mybackup.zip.
 
 ### db -stash
 This command will create a local copy of the gpg user-level configuration database. Use it if you are not sure what effect your changes will have. You can put back the version stashed with: '**gpg-man** db -unstash'.
-
-### db -delete
-This command deletes the entire gpg user-level configuration database.
-
-### db -unstash
-This command puts back the copy of the gpg user-level configuration database made earlier with '**gpg-man** db -stash'. Use it if you want to undo the changes made since the last time you stashed the database.
 
 ### key [obj] -delete
 This command deletes a key for a given email address. Example:  
@@ -79,6 +79,19 @@ If the name contains spaces, you should enquote the name or else escape the quot
 Key creating is notoriously lengthy with **gpg**. Also, don't be surprised that the program keeps accepting input while it is creating the key. This was done on purpose in **gpg**, in order to increase the entropy (randomness) of the key.
 
 
+### key.private [obj] -delete
+This command deletes only the private key for a given email address. Example:  
+        **gpg-man** ke.private john@doe.com -delete
+
+### key.private [obj] -sign [arg]
+This command uses the private key for an email address to sign a file. Example:  
+        **gpg-man** key.private john@doe.com -sign myfile.doc > myfile.sig  
+The redirection will save the signature into the file 'myfile.sig'. Without redirection, the command will just show the signature on the terminal screen. Example:  
+        **gpg-man** key.private john@doe.com -sign myfile.doc  
+It is also possible to supply the file on stdin. Example:  
+        cat myfile.doc | **gpg-man** key.private john@doe.com -sign - > myfile.sig  
+In that case, the file argument should be a dash ("-").
+
 ### key.private [obj] -show
 This command dumps the private key for an email address to stdout. Example:  
         **gpg-man** key.private john@doe.com -show > john.doe.key.pri  
@@ -91,24 +104,6 @@ This command verify if a private key exists for a particular email address. Exam
         **gpg-man** key.private john@doe.com -exists
 The command outputs 'yes' if the private key is present and 'no' if not.
 
-### key.private [obj] -sign [arg]
-This command uses the private key for an email address to sign a file. Example:  
-        **gpg-man** key.private john@doe.com -sign myfile.doc > myfile.sig  
-The redirection will save the signature into the file 'myfile.sig'. Without redirection, the command will just show the signature on the terminal screen. Example:  
-        **gpg-man** key.private john@doe.com -sign myfile.doc  
-It is also possible to supply the file on stdin. Example:  
-        cat myfile.doc | **gpg-man** key.private john@doe.com -sign - > myfile.sig  
-In that case, the file argument should be a dash ("-").
-
-### key.private [obj] -delete
-This command deletes only the private key for a given email address. Example:  
-        **gpg-man** ke.private john@doe.com -delete
-
-### key.public [obj] -exists
-This command verify if a public key exists for a particular email address. Example:  
-        **gpg-man** key.public john@doe.com -exists
-The command outputs 'yes' if the public key is present and 'no' if not.
- 
 ### key.public [obj] -fix-trust
 This command restores the trust in the key in the database identified by an email address, to the maximum level (6). At lower levels, **gpg** may balk at using the key. Example:  
         **gpg-man** key john@doe.com -fix-trust  
@@ -129,11 +124,22 @@ It is also possible to supply the file on stdin. Example:
         cat myfile.doc | **gpg-man** key.private john@doe.com -encrypt - > myfile.doc.encrypted  
 In that case, the file argument should be a dash ("-").
 
-### keys -fix-trust
-This command restores the trust in every key in the database to the maximum level (6). At lower levels, **gpg** may balk at using the key. Example:  
-        **gpg-man** db -fix-trust  
-**gpg-man** will normally always store keys at maximum trust level. It is possible, however, to manage the **gpg** database with other tools or directly with **gpg** and use different levels of ownertrust. 
+### key.public [obj] -exists
+This command verify if a public key exists for a particular email address. Example:  
+        **gpg-man** key.public john@doe.com -exists
+The command outputs 'yes' if the public key is present and 'no' if not.
+ 
+### keys -import-public-key [arg]
+This command imports a public key into the database. Example:  
+        **gpg-man** db -import-public-key myfile.pub
+In order to import from stdin, use '-' as file name. Example:  
+        cat mykey.pub | **gpg-man** db -import-public-key -  
 
+### keys -import-private-key [arg]
+This command imports a private key into the database. Example:  
+        **gpg-man** db -import-private-key myfile.pri  
+In order to import from stdin, use '-' as file name. Example:  
+        cat mykey.pri | **gpg-man** db -import-private-key -  
 
 ### keys -show
 This command shows the list of keys stored in the database. Example:  
@@ -151,17 +157,11 @@ john3@doe.com                  9E15E3DA   6       yes     yes     John 3 Doe
 **private**: Yes, if the private key is present. A key with just a public part, is very normal, if it was supplied by someone else to you.  
 **name**: The name of the person associated to the key.
 
-### keys -import-private-key [arg]
-This command imports a private key into the database. Example:  
-        **gpg-man** db -import-private-key myfile.pri  
-In order to import from stdin, use '-' as file name. Example:  
-        cat mykey.pri | **gpg-man** db -import-private-key -  
+### keys -fix-trust
+This command restores the trust in every key in the database to the maximum level (6). At lower levels, **gpg** may balk at using the key. Example:  
+        **gpg-man** db -fix-trust  
+**gpg-man** will normally always store keys at maximum trust level. It is possible, however, to manage the **gpg** database with other tools or directly with **gpg** and use different levels of ownertrust. 
 
-### keys -import-public-key [arg]
-This command imports a public key into the database. Example:  
-        **gpg-man** db -import-public-key myfile.pub
-In order to import from stdin, use '-' as file name. Example:  
-        cat mykey.pub | **gpg-man** db -import-public-key -  
 
 ### keys.private -decrypt [arg]
 This command scans through the collection of private keys to locate a private key than can decrypt the given message. Example:  
@@ -183,11 +183,11 @@ This command scans through the collection of public keys to locate a public key 
         **gpg-man** keys.public -verify-sig myfile.sig myfile.doc  
 The first argument must be the signature file (myfile.sig). The second argument must be the file which to which the signature applies (myfile.doc).
 
-### stash -exists
-This command checks if the stash exists. It outputs "yes", if it exists, and "no", if it doesn't.
-
 ### stash -delete
 This command deletes the stash.
+
+### stash -exists
+This command checks if the stash exists. It outputs "yes", if it exists, and "no", if it doesn't.
 
 ## ENVIRONMENT 
 ### GPG_FOLDER
