@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------
 # Written by Erik Poupaert
-# Phnom Penh, Cambodia, March 2013
+# Phnom Penh, Cambodia, October 2013
 # Licensed under the General Public License (GPL)
 #-------------------------------------------------------
-source "$UTIL_FOLDER/msb.debug"
-if [ -d "$GPG_STASHED_FOLDER" ] ; then
-	echo "yes"
+
+if [ $MSB_DEBUG_ROUTER -eq 1 ] ; then
+	set -x
 else
-	echo "no"
+	set +x
 fi
 
